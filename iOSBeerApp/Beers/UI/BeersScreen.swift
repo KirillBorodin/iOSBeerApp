@@ -15,7 +15,7 @@ struct BeersScreen: View {
             content
                 .navigationTitle("Beers")
                 .onAppear {
-                    viewModel.getBeers(page: 1)
+                    viewModel.getBeers()
                 }
         }
     }
@@ -27,15 +27,15 @@ struct BeersScreen: View {
             LoadingView()
         case .error(let errorMessage):
             ErrorView(errorMessage: errorMessage) {
-                viewModel.getBeers(page: 1)
+                viewModel.getBeers()
             }
         case .loaded(let beers):
-            BeerListView(beers: beers).refreshable {
+            BeerListView(beers: beers, viewModel: viewModel).refreshable {
                 if case .loading = viewModel.state {
                     // Avoid re-fetching if already loaded
                     return
                 }
-                viewModel.getBeers(page: 1)
+                viewModel.getBeers()
             }
         }
     }

@@ -10,6 +10,7 @@ import Foundation
 class BeersViewModel: ObservableObject {
     
     @Published var state: BeersViewState = .loading
+    private var page = 1
     
     private let getBeersUseCase: GetBeersUseCase
     private var cancellables = Set<AnyCancellable>()
@@ -18,13 +19,17 @@ class BeersViewModel: ObservableObject {
         self.getBeersUseCase = getBeersUseCase
     }
     
-    func getBeers(page: Int) {
-        self.state = .loading
+    func getBeers(isLoadMore: Bool = false) {
+        if !isLoadMore {
+            self.page = 1
+            self.state = .loading
+        }
+        
 
         Deferred {
             Future<[Beer], Error> { promise in
                 Task {
-                    let result = await self.getBeersUseCase.execute(page: page)
+                    let result = await self.getBeersUseCase.execute(page: self.page)
                     switch result {
                     case .success(let beers):
                         promise(.success(beers))
@@ -41,8 +46,22 @@ class BeersViewModel: ObservableObject {
                     self?.state = .error(error.localizedDescription)
                 }
             },
-            receiveValue: { [weak self] beers in
-                self?.state = .loaded(beers)
+            receiveValue: { [weak self] newBeers in
+                guard let self = self else { return }
+                    switch self.state {
+                    case .loading:
+                        // Initial load, set state to loaded with new beers
+                        self.state = .loaded(newBeers)
+                    case .loaded(let existingBeers):
+                        // Pagination: Append new beers to existing ones
+                        self.state = .loaded(existingBeers + newBeers)
+                    case .error:
+                        // Do nothing if an error occurs
+                        break
+                    }
+                if(isLoadMore) {
+                    page += 1
+                }
             }
         )
         .store(in: &cancellables)
