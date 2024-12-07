@@ -8,10 +8,14 @@
 import SwiftUI
 
 @main
-struct iOSBeerAppApp: App {
+struct iOSBeerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // Dependency injection for BeersViewModel
+            let remoteDataSource = OpenBreweryRemoteDataSource()
+            let repository = BeersRepository(remoteDataSource: remoteDataSource)
+            let getBeersUseCase = GetBeersUseCase(repository: repository)
+            BeersView(viewModel: BeersViewModel(getBeersUseCase: getBeersUseCase))
         }
     }
 }
