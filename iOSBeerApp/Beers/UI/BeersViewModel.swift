@@ -55,13 +55,11 @@ class BeersViewModel: ObservableObject {
                     case .loaded(let existingBeers):
                         // Pagination: Append new beers to existing ones
                         self.state = .loaded(existingBeers + newBeers)
+                        page += 1
                     case .error:
                         // Do nothing if an error occurs
                         break
                     }
-                if(isLoadMore) {
-                    page += 1
-                }
             }
         )
         .store(in: &cancellables)
