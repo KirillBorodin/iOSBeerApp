@@ -11,7 +11,7 @@ import os
 class OpenBreweryRemoteDataSource: BeersRemoteDataSource {
     
     private let baseUrl = "https://api.openbrewerydb.org/v1/breweries"
-    private let perPage: Int = 50
+    private let perPage: Int = 10
     private let logger = Logger(
         subsystem: "Beers.DataSources.Remote.OpenBrewery", category: "OpenBreweryRemoteDataSource")
     
