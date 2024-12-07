@@ -19,6 +19,8 @@ struct BeerDto: Codable {
     let websiteURL: String?
     let state: String?
     let street: String?
+    let longitude: String?
+    let latitude: String?
     
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -30,11 +32,12 @@ struct BeerDto: Codable {
         case country, phone
         case websiteURL = "website_url"
         case state, street
+        case longitude, latitude
     }
 }
 
 extension BeerDto {
     func toBo() -> Beer {
-        .init(id: id, name: name, breweryType: breweryType, address1: address1, city: city, stateProvince: stateProvince, postalCode: postalCode, country: country, phone: phone, websiteURL: websiteURL, state: state, street: street)
+        .init(id: id, name: name, breweryType: breweryType, address1: address1, city: city, stateProvince: stateProvince, postalCode: postalCode, country: country, phone: phone, websiteURL: websiteURL, state: state, street: street, longitude: longitude, latitude: latitude)
     }
 }

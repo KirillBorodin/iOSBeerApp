@@ -15,7 +15,7 @@ struct iOSBeerApp: App {
             let remoteDataSource = OpenBreweryRemoteDataSource()
             let repository = BeersRepository(remoteDataSource: remoteDataSource)
             let getBeersUseCase = GetBeersUseCase(repository: repository)
-            BeersView(viewModel: BeersViewModel(getBeersUseCase: getBeersUseCase))
+            BeersScreen(viewModel: BeersViewModel(getBeersUseCase: getBeersUseCase))
         }
     }
 }

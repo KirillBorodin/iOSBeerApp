@@ -17,4 +17,6 @@ struct Beer : Identifiable {
     let websiteURL: String?
     let state: String?
     let street: String?
+    let longitude: String?
+    let latitude: String?
 }
