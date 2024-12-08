@@ -22,3 +22,7 @@ struct ErrorView: View {
         }
     }
 }
+
+#Preview("Error State") {
+    BeersScreen(viewModel: MockBeersViewModel(state: .error("Failed to load beers.")))
+}

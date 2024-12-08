@@ -15,3 +15,7 @@ struct LoadingView: View {
         }
     }
 }
+
+#Preview("Loading State") {
+    BeersScreen(viewModel: MockBeersViewModel(state: .loading))
+}

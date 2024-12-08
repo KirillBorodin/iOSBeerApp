@@ -30,3 +30,7 @@ struct BeerListView: View {
         }
     }
 }
+
+#Preview("Loaded State") {
+    BeersScreen(viewModel: MockBeersViewModel(state: .loaded(Beer.sampleBeers)))
+}
