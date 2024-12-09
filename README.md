@@ -43,18 +43,23 @@ The app is built using the **MVVM + Use Cases** architectural pattern and adhere
      - Handles business logic for fetching breweries and managing pagination.
 
 3. **Domain Layer**:
+   - **Repository**:
+     - `BeersRepository`: Serves as the single source of truth, fetching data from local or remote sources.
+   - **Business Objects**:
+     - `Beer`: A domain model representing brewery data.
    - **Use Cases**:
      - `GetBeersUseCase`: Fetches a list of breweries from the repository.
      - `IsInternetConnectionAvailableUseCase`: Checks for internet connectivity.
-   - **Entities**:
-     - `Beer`: A domain model representing brewery data.
 
 4. **Data Layer**:
-   - **Repository**:
-     - `BeersRepository`: Serves as the single source of truth, fetching data from local or remote sources.
-   - **Data Sources**:
-     - `OpenBreweryRemoteDataSource`: Fetches data from the Open Brewery DB API.
+   - **Local**:
+     - **Entities**:
+       - `BeerEntity`: Represents the Core Data model for storing brewery data.
      - `CoreDataLocalDataSource`: Manages persistence with Core Data for offline support.
+   - **Remote**:
+     - **Dtos**:
+       - `BeerDto`: Represents the data structure fetched from the API.
+     - `OpenBreweryRemoteDataSource`: Fetches data from the Open Brewery DB API.
 
 ---
 
