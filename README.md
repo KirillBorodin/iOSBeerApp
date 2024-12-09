@@ -44,7 +44,7 @@ The app is built using the **MVVM + Use Cases** architectural pattern and adhere
 
 3. **Domain Layer**:
    - **Repository**:
-     - `BeersRepository`: Serves as the single source of truth, fetching data from local or remote sources.
+     - `BeersRepository`: Fetching data from local or remote sources.
    - **Business Objects**:
      - `Beer`: A domain model representing brewery data.
    - **Use Cases**:
