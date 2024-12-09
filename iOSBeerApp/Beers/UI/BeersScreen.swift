@@ -54,10 +54,9 @@ struct BeersScreen: View {
 }
 
 
-
 class MockBeersViewModel: BeersViewModel {
     init(state: BeersViewState) {
-        super.init(getBeersUseCase: GetBeersUseCase(repository: BeersRepository(remoteDataSource: OpenBreweryRemoteDataSource())))
+        super.init(getBeersUseCase: AppDependencies().getBeersUseCase)
         self.state = state
     }
     

@@ -20,12 +20,17 @@ class BeersViewModel: ObservableObject {
     }
     
     func getBeers(isLoadMore: Bool = false) {
-        if !isLoadMore {
-            self.page = 1
+        if isLoadMore {
+            self.page += 1 // Increment page for load more
+        } else {
+            self.page = 1 // Reset page for initial load
             self.state = .loading
         }
-        
-
+       
+        fetchBeers()
+    }
+    
+    private func fetchBeers() {
         Deferred {
             Future<[Beer], Error> { promise in
                 Task {
@@ -41,28 +46,27 @@ class BeersViewModel: ObservableObject {
         }
         .receive(on: DispatchQueue.main) // Ensure UI updates happen on the main thread
         .sink(
-            receiveCompletion: { [weak self] completion in
-                if case let .failure(error) = completion {
-                    self?.state = .error(error.localizedDescription)
-                }
-            },
-            receiveValue: { [weak self] newBeers in
-                guard let self = self else { return }
-                    switch self.state {
-                    case .loading:
-                        // Initial load, set state to loaded with new beers
-                        self.state = .loaded(newBeers)
-                    case .loaded(let existingBeers):
-                        // Pagination: Append new beers to existing ones
-                        self.state = .loaded(existingBeers + newBeers)
-                        page += 1
-                    case .error:
-                        // Do nothing if an error occurs
-                        break
-                    }
-            }
+            receiveCompletion: handleCompletion(_:),
+            receiveValue: handleNewBeers(_:)
         )
         .store(in: &cancellables)
+    }
+    
+    private func handleCompletion(_ completion: Subscribers.Completion<Error>) {
+        if case let .failure(error) = completion {
+            self.state = .error(error.localizedDescription)
+        }
+    }
+    
+    private func handleNewBeers(_ newBeers: [Beer]) {
+        switch self.state {
+        case .loading, .error:
+            // Replace state with new beers for loading or after an error
+            self.state = .loaded(newBeers)
+        case .loaded(let existingBeers):
+            // Append new beers for pagination
+            self.state = .loaded(existingBeers + newBeers)
+        }
     }
 }
 

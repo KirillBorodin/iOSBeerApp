@@ -22,7 +22,7 @@ class BeersRepository {
     /// Fetch beers for the given page.
     /// - Parameter page: The page number for pagination.
     /// - Returns: An array of `Beer` objects.
-    func get(page: Int) async throws -> [Beer] {
+    func get(page: Int, isLocalOnly: Bool = false) async throws -> [Beer] {
         guard page > 0 else {
             logger.error("Invalid page number: \(page). Must be greater than 0.")
             throw NSError(domain: "InvalidPage", code: 1, userInfo: [NSLocalizedDescriptionKey: "Page number must be greater than 0"])
@@ -32,6 +32,11 @@ class BeersRepository {
         
         
         let localBeers = try await localDataSource.get(page: page)
+        
+        if(isLocalOnly) {
+            logger.info("`isLocalOnly` requested. Returning local data for page \(page).")
+            return localBeers
+        }
         
         if !localBeers.isEmpty {
             logger.info("Returning local data for page \(page).")

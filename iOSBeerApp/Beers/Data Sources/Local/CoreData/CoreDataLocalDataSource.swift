@@ -16,7 +16,7 @@ class CoreDataLocalDataSource: BeersLocalDataSource {
     
     private let persistentContainer: NSPersistentContainer
     
-    private init() {
+    init() {
         logger.info("Initializing Core Data stack...")
         
         persistentContainer = NSPersistentContainer(name: "BeerModel")
