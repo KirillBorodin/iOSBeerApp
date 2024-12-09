@@ -15,7 +15,7 @@ class OpenBreweryRemoteDataSource: BeersRemoteDataSource {
     private let logger = Logger(
         subsystem: "Beers.DataSources.Remote.OpenBrewery", category: "OpenBreweryRemoteDataSource")
     
-    func getBeers(page: Int) async throws -> [Beer] {
+    func get(page: Int) async throws -> [Beer] {
         logger.info("Constructing URL for page \(page) with \(self.perPage) items per page.")
         
         guard var components = URLComponents(string: baseUrl) else {

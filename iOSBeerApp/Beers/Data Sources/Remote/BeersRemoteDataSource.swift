@@ -6,5 +6,5 @@
 //
 
 protocol BeersRemoteDataSource {
-    func getBeers(page: Int) async throws -> [Beer]
+    func get(page: Int) async throws -> [Beer]
 }

@@ -14,7 +14,7 @@ class GetBeersUseCase {
     
     func execute(page: Int) async -> Result<[Beer], Error> {
         do {
-            let beers = try await repository.getBeers(page: page)
+            let beers = try await repository.get(page: page)
             return .success(beers)
         } catch {
             return .failure(error)
