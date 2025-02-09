@@ -1,13 +1,14 @@
 //
-//  BeerItemView.swift
+//  BeerItemContentView.swift
 //  iOSBeerApp
 //
-//  Created by Kirill on 07.12.2024.
+//  Created by Kirill on 09.02.2025.
 //
 import SwiftUI
 import MapKit
 
-struct BeerItemView: View {
+struct BeerItemContentView: View {
+    
     let beer: Beer
     
     var body: some View {
@@ -20,7 +21,7 @@ struct BeerItemView: View {
                 Text("\(breweryType.capitalized) • \(beer.city)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-    
+                
             } else {
                 Text("Unknown Type • \(beer.city)")
                     .font(.subheadline)
@@ -45,7 +46,7 @@ struct BeerItemView: View {
                             )
                         }
                 }
-               
+                
             } else {
                 Text("📍 \(beer.city)")
                     .font(.footnote)
@@ -60,15 +61,14 @@ struct BeerItemView: View {
             }
             
             // Website
-            if let website = beer.websiteURL, let url = URL(string: website) {
-                Link("🌐 Visit Website", destination: url)
+            if let website = beer.websiteURL, let _ = URL(string: website) {
+                Text("🌐 Visit Website")
                     .font(.footnote)
                     .foregroundColor(.blue)
             }
         }
         .padding(.vertical, 8)
     }
-    
     
     func openInAppleMaps(address: String?, city: String?, latitude: String?, longitude: String?) {
         if let lat = latitude, let lon = longitude, let latDouble = Double(lat), let lonDouble = Double(lon) {
@@ -96,5 +96,3 @@ struct BeerItemView: View {
         }
     }
 }
-
-
