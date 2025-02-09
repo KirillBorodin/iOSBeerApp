@@ -11,6 +11,11 @@ The purpose of the app is to allow users to explore a list of breweries fetched 
 
 ---
 
+## **Demo**
+| **Pagination**                     | **Pull To Refresh**               | **Item Usage**                   |
+|------------------------------------|------------------------------------|-----------------------------------|
+| <img src="./Pagination.gif" alt="Pagination" width="250"/> | <img src="./Pull to refresh.gif" alt="Pull to refresh" width="250"/> | <img src="./Item usage.gif" alt="Item usage" width="250"/> |
+
 ## **Features**
 
 - Fetch brewery data from the [Open Brewery DB API](https://api.openbrewerydb.org/v1/breweries).
