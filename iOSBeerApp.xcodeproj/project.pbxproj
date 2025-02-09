@@ -29,9 +29,22 @@
 		CE4942CD2D043CE000EFCE36 /* iOSBeerAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSBeerAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CE5DC2A12D58CC8500E21BEF /* Exceptions for "iOSBeerApp" folder in "iOSBeerApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CE4942B22D043CDF00EFCE36 /* iOSBeerApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CE4942B52D043CDF00EFCE36 /* iOSBeerApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CE5DC2A12D58CC8500E21BEF /* Exceptions for "iOSBeerApp" folder in "iOSBeerApp" target */,
+			);
 			path = iOSBeerApp;
 			sourceTree = "<group>";
 		};
