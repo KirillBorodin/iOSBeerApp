@@ -13,7 +13,6 @@ class BeersViewModel: ObservableObject {
     private var page = 1
     
     private let getBeersUseCase: GetBeersUseCase
-    private var cancellables = Set<AnyCancellable>()
     
     init(getBeersUseCase: GetBeersUseCase) {
         self.getBeersUseCase = getBeersUseCase
@@ -26,30 +25,22 @@ class BeersViewModel: ObservableObject {
             self.page = 1 // Reset page for initial load
             self.state = .loading
         }
-       
+        
         fetchBeers()
     }
     
     private func fetchBeers() {
-        Deferred {
-            Future<[Beer], Error> { promise in
-                Task {
-                    let result = await self.getBeersUseCase.execute(page: self.page)
-                    switch result {
-                    case .success(let beers):
-                        promise(.success(beers))
-                    case .failure(let error):
-                        promise(.failure(error))
-                    }
+        Task {
+            let result = await getBeersUseCase.execute(page: page) // Runs on a background thread
+            await MainActor.run { // Switch back to Main Thread for UI updates
+                switch result {
+                case .success(let beers):
+                    handleNewBeers(beers)
+                case .failure(let error):
+                    handleCompletion(.failure(error))
                 }
             }
         }
-        .receive(on: DispatchQueue.main) // Ensure UI updates happen on the main thread
-        .sink(
-            receiveCompletion: handleCompletion(_:),
-            receiveValue: handleNewBeers(_:)
-        )
-        .store(in: &cancellables)
     }
     
     private func handleCompletion(_ completion: Subscribers.Completion<Error>) {
